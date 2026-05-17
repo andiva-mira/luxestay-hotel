@@ -1,0 +1,588 @@
+---
+import BaseLayout from "@/src/layouts/BaseLayout.astro";
+
+const rooms = [
+  {
+    name: "Coastal Panorama Suite",
+    price: "$1,250",
+    priceValue: 1250,
+    type: "suite",
+    size: "850 sq ft",
+    view: "Ocean Front",
+    viewCategory: "ocean",
+    image: "https://images.unsplash.com/photo-1591088398332-8a77d399c842?auto=format&fit=crop&q=80&w=2574",
+    slug: "coastal-panorama"
+  },
+  {
+    name: "Architect's Loft",
+    price: "$850",
+    priceValue: 850,
+    type: "loft",
+    size: "620 sq ft",
+    view: "Mountain Range",
+    viewCategory: "mountain",
+    image: "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=2574",
+    slug: "architects-loft"
+  },
+  {
+    name: "Cliffside Cabin",
+    price: "$650",
+    priceValue: 650,
+    type: "cabin",
+    size: "450 sq ft",
+    view: "Pine Forest",
+    viewCategory: "forest",
+    image: "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&q=80&w=2574",
+    slug: "cliffside-cabin"
+  },
+  {
+    name: "The Presidential Wing",
+    price: "$4,500",
+    priceValue: 4500,
+    type: "wing",
+    size: "2,400 sq ft",
+    view: "Full Coastal Wrap",
+    viewCategory: "ocean",
+    image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=2570",
+    slug: "presidential-wing"
+  }
+];
+---
+
+<BaseLayout title="Suites & Rooms" description="Discover our selection of luxury suites designed for the discerning traveler.">
+  <section class="rooms-hero">
+    <div class="rooms-hero-content">
+      <p class="hero-label">Accommodations</p>
+      <h1 class="hero-title serif italic">The Sanctuaries.</h1>
+      <div class="hero-divider"></div>
+    </div>
+
+    <!-- Filtering Bar -->
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label for="type-filter" class="filter-label">Type</label>
+        <div class="select-container">
+          <select id="type-filter" class="filter-select">
+            <option value="all">All Types</option>
+            <option value="suite">Suites</option>
+            <option value="loft">Lofts</option>
+            <option value="cabin">Cabins</option>
+            <option value="wing">Wings</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label for="price-filter" class="filter-label">Price Range</label>
+        <div class="select-container">
+          <select id="price-filter" class="filter-select">
+            <option value="all">All Prices</option>
+            <option value="0-1000">Under $1,000</option>
+            <option value="1000-2000">$1,000 - $2,000</option>
+            <option value="2000+">$2,000+</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label for="view-filter" class="filter-label">View</label>
+        <div class="select-container">
+          <select id="view-filter" class="filter-select">
+            <option value="all">All Views</option>
+            <option value="ocean">Ocean</option>
+            <option value="mountain">Mountain</option>
+            <option value="forest">Forest</option>
+          </select>
+        </div>
+      </div>
+
+      <button id="reset-filters" class="reset-button">Clear</button>
+    </div>
+
+    <div class="rooms-list" id="rooms-grid">
+      {rooms.map((room, index) => (
+        <div 
+          class={`room-item ${index % 2 === 1 ? 'reverse' : ''}`}
+          data-type={room.type}
+          data-price={room.priceValue}
+          data-view={room.viewCategory}
+        >
+          <div class="room-visual">
+            <a href={`/rooms/${room.slug}`} class="room-link-cover">
+              <img 
+                src={room.image} 
+                alt={room.name} 
+                class="room-list-img"
+                referrerpolicy="no-referrer"
+              />
+              <div class="room-img-reveal"></div>
+            </a>
+          </div>
+          
+          <div class="room-content">
+            <div class="room-header-group">
+              <div class="room-title-row">
+                <h2 class="room-title serif italic">{room.name}</h2>
+                <p class="room-price-text serif italic">{room.price}</p>
+              </div>
+              <div class="room-specs">
+                <span>{room.size}</span>
+                <span class="spec-divider"></span>
+                <span>{room.view}</span>
+              </div>
+            </div>
+
+            <p class="room-description-text">
+              A masterfully crafted space prioritizing stillness and natural light. Every texture and surface has been chosen to evoke the serenity of the surrounding landscape.
+            </p>
+
+            <div class="room-link-wrapper">
+              <a href={`/rooms/${room.slug}`} class="room-details-link">
+                <span class="link-label">View Details</span>
+                <div class="link-line"></div>
+              </a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- No Results Message -->
+    <div id="no-results" class="no-results hidden">
+      <p class="serif italic">No sanctuaries match your current filters.</p>
+      <button id="clear-filters-empty" class="link-label">Reset All Filters</button>
+    </div>
+  </section>
+
+  <!-- Reservation Section -->
+  <section class="concierge-section">
+    <div class="concierge-container">
+      <h3 class="concierge-title serif italic">Customizing your stay?</h3>
+      <p class="concierge-text">Contact our concierge for bespoke arrangements, private events, or extended residencies.</p>
+      <button class="btn-outline">
+        Contact Concierge
+      </button>
+    </div>
+  </section>
+</BaseLayout>
+
+<style lang="scss">
+  @use "../../styles/variables" as *;
+
+  .rooms-hero {
+    padding-top: $space-32 * 1.5;
+    padding-bottom: $space-24;
+    padding-left: $space-6;
+    padding-right: $space-6;
+    background-color: #050505;
+
+    @media (min-width: $md) {
+      padding-left: $space-12;
+      padding-right: $space-12;
+    }
+  }
+
+  .rooms-hero-content {
+    @include container;
+    text-align: center;
+    margin-bottom: $space-32;
+  }
+
+  .hero-label {
+    @include uppercase-tracking(11px, 0.4em);
+    margin-bottom: $space-6;
+    opacity: 0.4;
+    font-weight: 600;
+  }
+
+  .hero-title {
+    font-size: clamp(3.75rem, 10vw, 8rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-divider {
+    height: 1px;
+    background-color: rgba($white, 0.2);
+    width: $space-32;
+    margin: $space-12 auto 0;
+  }
+
+  .filter-bar {
+    @include container;
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-8;
+    margin-bottom: $space-24;
+    padding: $space-8;
+    background-color: rgba($white, 0.03);
+    border: 1px solid rgba($white, 0.05);
+    backdrop-filter: blur(10px);
+    align-items: flex-end;
+
+    @media (min-width: $md) {
+      gap: $space-12;
+      justify-content: center;
+    }
+  }
+
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+    flex: 1;
+    min-width: 140px;
+  }
+
+  .filter-label {
+    @include uppercase-tracking(9px, 0.2em);
+    opacity: 0.4;
+    font-weight: 600;
+  }
+
+  .select-container {
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      right: $space-4;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 4px solid rgba($white, 0.5);
+      pointer-events: none;
+    }
+  }
+
+  .filter-select {
+    width: 100%;
+    background: transparent;
+    border: 1px solid rgba($white, 0.1);
+    color: $white;
+    padding: $space-3 $space-8 $space-3 $space-4;
+    @include uppercase-tracking(10px, 0.1em);
+    appearance: none;
+    cursor: pointer;
+    transition: $transition-default;
+
+    &:hover {
+      border-color: rgba($white, 0.3);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $white;
+    }
+
+    option {
+      background-color: $black;
+      color: $white;
+    }
+  }
+
+  .reset-button {
+    background: transparent;
+    border: 1px solid rgba($white, 0.1);
+    color: rgba($white, 0.6);
+    padding: $space-3 $space-6;
+    @include uppercase-tracking(10px, 0.1em);
+    cursor: pointer;
+    transition: $transition-default;
+    height: 42px;
+
+    &:hover {
+      background-color: rgba($white, 0.05);
+      color: $white;
+    }
+  }
+
+  .no-results {
+    text-align: center;
+    padding: $space-24 0;
+    
+    &.hidden {
+      display: none;
+    }
+
+    p {
+      font-size: 1.5rem;
+      margin-bottom: $space-6;
+      opacity: 0.6;
+    }
+
+    button {
+      background: none;
+      border: none;
+      color: $white;
+      cursor: pointer;
+      padding: $space-2;
+      border-bottom: 1px solid rgba($white, 0.3);
+      
+      &:hover {
+        border-bottom-color: $white;
+      }
+    }
+  }
+
+  .rooms-list {
+    @include container;
+    display: flex;
+    flex-direction: column;
+    gap: $space-32;
+
+    @media (min-width: $lg) {
+      gap: $space-48;
+    }
+  }
+
+  .room-item {
+    display: flex;
+    flex-direction: column;
+    gap: $space-12;
+    align-items: center;
+
+    @media (min-width: $lg) {
+      flex-direction: row;
+      gap: $space-24;
+
+      &.reverse {
+        flex-direction: row-reverse;
+      }
+    }
+  }
+
+  .room-visual {
+    width: 100%;
+    overflow: hidden;
+
+    @media (min-width: $lg) {
+      width: 60%;
+    }
+  }
+
+  .room-link-cover {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    background-color: #18181b;
+    aspect-ratio: 16 / 10;
+  }
+
+  .room-list-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 2s ease, opacity 0.5s ease;
+    opacity: 0.9;
+
+    .room-link-cover:hover & {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+  }
+
+  .room-img-reveal {
+    position: absolute;
+    inset: 0;
+    background-color: rgba($black, 0.2);
+    transition: background-color 0.3s ease;
+
+    .room-link-cover:hover & {
+      background-color: transparent;
+    }
+  }
+
+  .room-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: $space-8;
+
+    @media (min-width: $lg) {
+      width: 40%;
+    }
+  }
+
+  .room-header-group {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+
+  .room-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .room-title {
+    font-size: 2.25rem;
+    line-height: 1;
+  }
+
+  .room-price-text {
+    font-size: 1.125rem;
+    opacity: 0.6;
+  }
+
+  .room-specs {
+    display: flex;
+    gap: $space-6;
+    @include uppercase-tracking(10px, 0.2em);
+    opacity: 0.4;
+    font-weight: 500;
+  }
+
+  .spec-divider {
+    width: 1px;
+    height: 0.75rem;
+    background-color: rgba($white, 0.2);
+  }
+
+  .room-description-text {
+    color: rgba($white, 0.6);
+    font-weight: 300;
+    line-height: 2;
+  }
+
+  .room-link-wrapper {
+    padding-top: $space-4;
+  }
+
+  .room-details-link {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-6;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .link-label {
+    @include uppercase-tracking(11px, 0.2em);
+    font-weight: 600;
+  }
+
+  .link-line {
+    width: $space-12;
+    height: 1px;
+    background-color: rgba($white, 0.2);
+    transition: width 0.5s ease;
+
+    .room-details-link:hover & {
+      width: $space-24;
+    }
+  }
+
+  .concierge-section {
+    padding: $space-48 $space-6;
+    text-align: center;
+    background-color: $black;
+
+    @media (min-width: $md) {
+      padding-left: $space-12;
+      padding-right: $space-12;
+    }
+  }
+
+  .concierge-container {
+    max-width: 42rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: $space-12;
+  }
+
+  .concierge-title {
+    font-size: 2.25rem;
+    font-weight: 300;
+  }
+
+  .concierge-text {
+    color: rgba($white, 0.5);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .btn-outline {
+    align-self: center;
+    border: 1px solid rgba($white, 0.3);
+    padding: $space-4 $space-12;
+    border-radius: 9999px;
+    @include uppercase-tracking(11px, 0.2em);
+    font-weight: 600;
+    transition: $transition-default;
+
+    &:hover {
+      background-color: $white;
+      color: $black;
+    }
+  }
+</style>
+
+<script>
+  const typeFilter = document.getElementById('type-filter') as HTMLSelectElement;
+  const priceFilter = document.getElementById('price-filter') as HTMLSelectElement;
+  const viewFilter = document.getElementById('view-filter') as HTMLSelectElement;
+  const resetButton = document.getElementById('reset-filters');
+  const emptyResetButton = document.getElementById('clear-filters-empty');
+  const roomItems = document.querySelectorAll('.room-item');
+  const noResults = document.getElementById('no-results');
+
+  function filterRooms() {
+    const typeValue = typeFilter.value;
+    const priceValue = priceFilter.value;
+    const viewValue = viewFilter.value;
+
+    let visibleCount = 0;
+
+    roomItems.forEach(item => {
+      const roomType = item.getAttribute('data-type');
+      const roomPrice = parseInt(item.getAttribute('data-price') || '0');
+      const roomView = item.getAttribute('data-view');
+
+      let typeMatch = typeValue === 'all' || typeValue === roomType;
+      let viewMatch = viewValue === 'all' || viewValue === roomView;
+      let priceMatch = true;
+
+      if (priceValue === '0-1000') {
+        priceMatch = roomPrice < 1000;
+      } else if (priceValue === '1000-2000') {
+        priceMatch = roomPrice >= 1000 && roomPrice <= 2000;
+      } else if (priceValue === '2000+') {
+        priceMatch = roomPrice > 2000;
+      }
+
+      if (typeMatch && viewMatch && priceMatch) {
+        item.classList.remove('hidden');
+        (item as HTMLElement).style.display = 'flex';
+        visibleCount++;
+      } else {
+        item.classList.add('hidden');
+        (item as HTMLElement).style.display = 'none';
+      }
+    });
+
+    if (visibleCount === 0) {
+      noResults?.classList.remove('hidden');
+    } else {
+      noResults?.classList.add('hidden');
+    }
+  }
+
+  function resetFilters() {
+    typeFilter.value = 'all';
+    priceFilter.value = 'all';
+    viewFilter.value = 'all';
+    filterRooms();
+  }
+
+  typeFilter?.addEventListener('change', filterRooms);
+  priceFilter?.addEventListener('change', filterRooms);
+  viewFilter?.addEventListener('change', filterRooms);
+  resetButton?.addEventListener('click', resetFilters);
+  emptyResetButton?.addEventListener('click', resetFilters);
+</script>

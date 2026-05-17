@@ -1,0 +1,348 @@
+---
+import BaseLayout from "@/src/layouts/BaseLayout.astro";
+
+const venues = [
+  {
+    name: "The Cliffside",
+    concept: "Fine Dining",
+    hours: "18:00 — 22:30",
+    description: "Our signature restaurant celebrating the raw beauty of the Pacific. A seasonal menu driven by local foragers and fishermen.",
+    image: "https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&q=80&w=2670"
+  },
+  {
+    name: "Azure Lounge",
+    concept: "Bar & Terrace",
+    hours: "11:00 — 01:00",
+    description: "Crafted cocktails and artisanal spirits paired with panoramic coastal views. The social heart of LuxeStay.",
+    image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=2670"
+  }
+];
+---
+
+<BaseLayout title="Dining Experience" description="Explore the culinary arts at LuxeStay. From fine dining at The Cliffside to artisanal cocktails at Azure Lounge.">
+  <section class="dining-hero">
+    <div class="hero-bg">
+      <img 
+        src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=2670" 
+        alt="Interior of Fine Dining" 
+        class="hero-img"
+        referrerpolicy="no-referrer"
+      />
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <p class="hero-subtitle">Gastronomy & Culture</p>
+      <h1 class="hero-title serif italic">The Table.</h1>
+    </div>
+  </section>
+
+  <section class="venues-section">
+    <div class="venues-container">
+      {venues.map((venue, index) => (
+        <div class={`venue-item ${index % 2 === 1 ? 'reverse' : ''}`}>
+          <div class="venue-img-wrapper">
+            <img 
+              src={venue.image} 
+              alt={venue.name} 
+              class="venue-img"
+              referrerpolicy="no-referrer"
+            />
+          </div>
+          <div class="venue-info">
+            <div class="venue-header-group">
+              <div class="venue-title-row">
+                <h2 class="venue-name serif italic">{venue.name}</h2>
+                <span class="venue-concept">{venue.concept}</span>
+              </div>
+              <p class="venue-hours italic low-opacity">{venue.hours}</p>
+            </div>
+            <p class="venue-description serif italic">
+              {venue.description}
+            </p>
+            <div class="venue-actions">
+              <button class="text-link">View Menu</button>
+              <button class="text-link">Book Table</button>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Experiences Grid -->
+  <section class="features-section">
+    <div class="features-container">
+      <div class="features-grid">
+        <div class="feature-card">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feature-icon"><path d="m16 2-2.3 2.3c-.8.8-.8 2 0 2.8L17 10.3c.8.8 2 .8 2.8 0L22 8"/><path d="m15 15 7 7"/><path d="m8 15-7 7"/><path d="M2 11.6V7a4 4 0 0 1 8 0v4.6"/><path d="M10 8.5V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v4.5"/></svg>
+          <h3 class="feature-title serif italic">In-Room Dining</h3>
+          <p class="feature-text">Enjoy our full restaurant menu in the comfort of your suite, available 24 hours a day.</p>
+        </div>
+        <div class="feature-card">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feature-icon"><path d="M8 22h8"/><path d="M7 10h10"/><path d="M12 15v7"/><path d="M12 15a5 5 0 0 0 5-5c0-2-.5-4-2-8H9c-1.5 4-2 6-2 8a5 5 0 0 0 5 5z"/></svg>
+          <h3 class="feature-title serif italic">Cellar Tours</h3>
+          <p class="feature-text">Explore our temperature-controlled cellar featuring over 5,000 labels of rare vintages.</p>
+        </div>
+        <div class="feature-card">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feature-icon"><path d="M10 2v2"/><path d="M14 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/><path d="M6 2v2"/></svg>
+          <h3 class="feature-title serif italic">Patisserie</h3>
+          <p class="feature-text">Handcrafted pastries and artisanal coffee served daily in the morning lobby.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="cta-container">
+      <h3 class="cta-title serif italic">A Taste of the Coast.</h3>
+      <p class="cta-text">Join us for a journey of discovery. Reservations are recommended for evening dining at The Cliffside.</p>
+      <button class="btn-primary">Reserve Your Table</button>
+    </div>
+  </section>
+</BaseLayout>
+
+<style lang="scss">
+  @use "../styles/variables" as *;
+
+  .dining-hero {
+    position: relative;
+    height: 80vh;
+    @include flex-center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba($black, 0.6);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 0 $space-6;
+    display: flex;
+    flex-direction: column;
+    gap: $space-8;
+  }
+
+  .hero-subtitle {
+    @include uppercase-tracking(11px, 0.4em);
+    font-weight: 600;
+    opacity: 0.6;
+  }
+
+  .hero-title {
+    font-size: clamp(4rem, 15vw, 9rem);
+    line-height: 1;
+    font-weight: 300;
+  }
+
+  .venues-section {
+    padding: $space-32 0;
+    background-color: #050505;
+  }
+
+  .venues-container {
+    @include container;
+    display: flex;
+    flex-direction: column;
+    gap: $space-32;
+
+    @media (min-width: $lg) {
+      gap: $space-32 * 1.5;
+    }
+  }
+
+  .venue-item {
+    display: flex;
+    flex-direction: column;
+    gap: $space-12;
+    align-items: center;
+
+    @media (min-width: $lg) {
+      flex-direction: row;
+      gap: $space-24;
+
+      &.reverse {
+        flex-direction: row-reverse;
+      }
+    }
+  }
+
+  .venue-img-wrapper {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+
+    @media (min-width: $lg) {
+      width: 60%;
+    }
+  }
+
+  .venue-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+  }
+
+  .venue-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: $space-8;
+
+    @media (min-width: $lg) {
+      width: 40%;
+    }
+  }
+
+  .venue-header-group {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+
+  .venue-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .venue-name {
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1;
+  }
+
+  .venue-concept {
+    @include uppercase-tracking(10px, 0.2em);
+    opacity: 0.4;
+  }
+
+  .venue-hours {
+    @include uppercase-tracking(11px, 0.2em);
+    font-weight: 600;
+    opacity: 0.6;
+  }
+
+  .venue-description {
+    font-size: 1.125rem;
+    font-weight: 300;
+    color: rgba($white, 0.6);
+    line-height: 1.6;
+  }
+
+  .venue-actions {
+    display: flex;
+    gap: $space-12;
+    padding-top: $space-8;
+    border-top: 1px solid rgba($white, 0.05);
+  }
+
+  .text-link {
+    @include uppercase-tracking(11px, 0.2em);
+    font-weight: 600;
+    border-bottom: 1px solid rgba($white, 0.2);
+    padding-bottom: $space-1;
+    transition: border-color 0.3s ease;
+
+    &:hover {
+      border-color: $white;
+    }
+  }
+
+  .features-section {
+    padding: $space-32 $space-6;
+    border-top: 1px solid rgba($white, 0.05);
+  }
+
+  .features-container {
+    @include container;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $space-16;
+
+    @media (min-width: $md) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .feature-card {
+    text-align: center;
+    padding: 0 $space-4;
+    display: flex;
+    flex-direction: column;
+    gap: $space-8;
+  }
+
+  .feature-icon {
+    margin: 0 auto;
+    opacity: 0.4;
+  }
+
+  .feature-title {
+    font-size: 1.5rem;
+  }
+
+  .feature-text {
+    font-size: 0.875rem;
+    font-weight: 300;
+    color: rgba($white, 0.5);
+    line-height: 1.6;
+  }
+
+  .cta-section {
+    padding: $space-32 * 1.5 $space-6;
+    text-align: center;
+    background-color: #09090b;
+  }
+
+  .cta-container {
+    max-width: 36rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: $space-12;
+  }
+
+  .cta-title {
+    font-size: 2.25rem;
+  }
+
+  .cta-text {
+    opacity: 0.6;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .btn-primary {
+    align-self: center;
+    background-color: $white;
+    color: $black;
+    padding: $space-4 $space-12;
+    border-radius: 9999px;
+    @include uppercase-tracking(11px, 0.2em);
+    font-weight: 600;
+    transition: $transition-default;
+
+    &:hover {
+      background-color: rgba($white, 0.9);
+    }
+  }
+</style>

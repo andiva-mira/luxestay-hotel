@@ -1,0 +1,495 @@
+---
+import BaseLayout from "@/src/layouts/BaseLayout.astro";
+import BookingForm from "@/src/components/BookingForm.astro";
+
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'coastal-panorama' }, props: { 
+      name: "Coastal Panorama Suite",
+      images: [
+        "https://images.unsplash.com/photo-1591088398332-8a77d399c842?auto=format&fit=crop&q=80&w=2574",
+        "https://images.unsplash.com/photo-1590490359683-658d3d23f972?auto=format&fit=crop&q=80&w=2574",
+        "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&q=80&w=2574"
+      ],
+      description: "Our flagship suite offers an uninterrupted 180-degree view of the Pacific coastline. Defined by modern minimalism and organic textures, it is a testament to silent luxury.",
+      price: "$1,250",
+      amenities: ["Private Balcony", "Steam Shower", "Sonos Sound System", "Nespresso Bar", "Premium Linens"]
+    }},
+    { params: { slug: 'architects-loft' }, props: { 
+      name: "Architect's Loft",
+      images: [
+        "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=2574",
+        "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=2571",
+        "https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&q=80&w=2570"
+      ],
+      description: "An open-concept studio with soaring ceilings and industrial-chic accents. Perfect for those who find inspiration in space and geometry.",
+      price: "$850",
+      amenities: ["Workspace", "Cast Iron Tub", "Vinyl Collection", "Honesty Bar", "Smart Home Tech"]
+    }},
+    { params: { slug: 'cliffside-cabin' }, props: { 
+      name: "Cliffside Cabin",
+      images: [
+        "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&q=80&w=2574",
+        "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&q=80&w=2670",
+        "https://images.unsplash.com/photo-1449156001533-82ff4268e4ba?auto=format&fit=crop&q=80&w=2670"
+      ],
+      description: "Tucked away at the edge of the pine forest, this cabin provides the ultimate in seclusion. Hear nothing but the rhythm of the waves below.",
+      price: "$650",
+      amenities: ["Wood Fireplace", "Telescope", "Outdoor Deck", "Matte Ceramics", "Locally Sourced Minibar"]
+    }},
+    { params: { slug: 'presidential-wing' }, props: { 
+      name: "The Presidential Wing",
+      images: [
+        "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=2570",
+        "https://images.unsplash.com/photo-1551882547-ff43c69e5cf2?auto=format&fit=crop&q=80&w=2670",
+        "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&q=80&w=2670"
+      ],
+      description: "The crown jewel of LuxeStay. A sprawling multi-room estate within the hotel, featuring a private kitchen, dedicated butler service, and a wraparound terrace.",
+      price: "$4,500",
+      amenities: ["Private Butler", "Full Kitchen", "Helipad Access", "Grand Piano", "Personal Gym"]
+    }},
+  ];
+}
+
+const { name, images, description, price, amenities } = Astro.props;
+---
+
+<BaseLayout title={name}>
+  <section class="room-hero">
+    <div class="hero-carousel" id="hero-carousel">
+      <div class="carousel-track" id="carousel-track">
+        {images.map((img, index) => (
+          <div class={`carousel-slide ${index === 0 ? 'active' : ''}`} data-index={index}>
+            <img 
+              src={img} 
+              alt={`${name} view ${index + 1}`} 
+              class="hero-img"
+              referrerpolicy="no-referrer"
+            />
+          </div>
+        ))}
+      </div>
+      <div class="hero-overlay"></div>
+      
+      {images.length > 1 && (
+        <>
+          <div class="carousel-controls">
+            <button id="prev-btn" class="carousel-control" aria-label="Previous image">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <button id="next-btn" class="carousel-control" aria-label="Next image">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+
+          <div class="carousel-dots">
+            {images.map((_, index) => (
+              <button class={`carousel-dot ${index === 0 ? 'active' : ''}`} data-index={index} aria-label={`Go to slide ${index + 1}`}></button>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+    
+    <div class="hero-content">
+      <div class="hero-inner">
+        <a href="/rooms" class="back-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="back-icon"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+          <span>Back to Rooms</span>
+        </a>
+        <h1 class="hero-title serif italic">{name}</h1>
+      </div>
+    </div>
+  </section>
+
+  <section class="room-details">
+    <div class="details-container">
+      <!-- Description -->
+      <div class="main-content">
+        <div class="experience-group">
+          <h2 class="section-label">The Experience</h2>
+          <p class="description-text serif italic">
+            {description}
+          </p>
+          <div class="gallery-link-wrapper">
+            <a href={`/rooms/${Astro.params.slug}/gallery`} class="text-link">View Full Gallery</a>
+          </div>
+        </div>
+
+        <div class="specs-grid">
+          <div class="spec-card">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="spec-icon"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+            <h4 class="spec-label">Space</h4>
+            <p class="spec-value serif italic">850 sq ft of sanctuary</p>
+          </div>
+          <div class="spec-card">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="spec-icon"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>
+            <h4 class="spec-label">Climate</h4>
+            <p class="spec-value serif italic">Precision control</p>
+          </div>
+          <div class="spec-card">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="spec-icon"><path d="M10 2v2"/><path d="M14 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/><path d="M6 2v2"/></svg>
+            <h4 class="spec-label">In-Room</h4>
+            <p class="spec-value serif italic">Artisan Provisions</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar">
+        <BookingForm price={price} />
+      </div>
+    </div>
+  </section>
+
+<style lang="scss">
+  @use "../../styles/variables" as *;
+
+  .room-hero {
+    position: relative;
+    height: 80vh;
+    overflow: hidden;
+  }
+
+  .hero-carousel {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .carousel-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .carousel-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    pointer-events: none;
+
+    &.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  .hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba($black, 0.3);
+  }
+
+  .carousel-controls {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 $space-6;
+    z-index: 20;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+
+    .hero-carousel:hover & {
+      opacity: 1;
+    }
+
+    @media (min-width: $md) {
+      padding: 0 $space-12;
+    }
+
+    @media (max-width: $md) {
+      opacity: 1; // Always show on mobile
+    }
+  }
+
+  .carousel-control {
+    pointer-events: auto;
+    background: transparent;
+    color: $white;
+    width: $space-12;
+    height: $space-12;
+    border-radius: 50%;
+    border: 1px solid rgba($white, 0.2);
+    @include flex-center;
+    transition: $transition-default;
+    backdrop-filter: blur(4px);
+
+    &:hover {
+      background: $white;
+      color: $black;
+      border-color: $white;
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+
+  .carousel-dots {
+    position: absolute;
+    bottom: $space-12;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: $space-6;
+    z-index: 20;
+  }
+
+  .carousel-dot {
+    width: 24px;
+    height: 2px;
+    background: rgba($white, 0.2);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: $transition-default;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: $white;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s ease;
+    }
+
+    &.active {
+      background: rgba($white, 0.4);
+      
+      &::after {
+        transform: scaleX(1);
+      }
+    }
+    
+    &:hover:not(.active) {
+      background: rgba($white, 0.4);
+    }
+  }
+
+  .hero-content {
+    position: absolute;
+    inset: 0;
+    @include flex-center;
+    padding-top: $space-24;
+  }
+
+  .hero-inner {
+    text-align: center;
+    padding: 0 $space-6;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-3;
+    @include uppercase-tracking(10px, 0.3em);
+    font-weight: 600;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+    margin-bottom: $space-8;
+    text-decoration: none;
+    color: inherit;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .hero-title {
+    font-size: clamp(3rem, 10vw, 8rem);
+    font-weight: 300;
+    color: $white;
+    filter: drop-shadow(0 4px 6px rgba($black, 0.5));
+  }
+
+  .room-details {
+    background-color: #050505;
+    padding: $space-32 $space-6;
+
+    @media (min-width: $md) {
+      padding-left: $space-12;
+      padding-right: $space-12;
+    }
+  }
+
+  .details-container {
+    @include container;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $space-24;
+
+    @media (min-width: $lg) {
+      grid-template-columns: repeat(12, 1fr);
+    }
+  }
+
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    gap: $space-12;
+
+    @media (min-width: $lg) {
+      grid-column: span 7;
+    }
+  }
+
+  .experience-group {
+    display: flex;
+    flex-direction: column;
+    gap: $space-6;
+  }
+
+  .section-label {
+    @include uppercase-tracking(11px, 0.3em);
+    font-weight: 600;
+    opacity: 0.4;
+  }
+
+  .description-text {
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
+    line-height: $line-height-relaxed;
+    color: rgba($white, 0.9);
+  }
+
+  .gallery-link-wrapper {
+    padding-top: $space-4;
+  }
+
+  .text-link {
+    @include uppercase-tracking(11px, 0.2em);
+    font-weight: 600;
+    border-bottom: 1px solid rgba($white, 0.2);
+    padding-bottom: $space-1;
+    transition: border-color 0.3s ease;
+
+    &:hover {
+      border-color: $white;
+    }
+  }
+
+  .specs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-12;
+    padding-top: $space-12;
+    border-top: 1px solid rgba($white, 0.05);
+
+    @media (min-width: $md) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .spec-card {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+
+  .spec-icon {
+    color: rgba($white, 0.4);
+  }
+
+  .spec-label {
+    @include uppercase-tracking(10px, 0.2em);
+    font-weight: 600;
+    opacity: 0.4;
+  }
+
+  .spec-value {
+    font-size: 0.875rem;
+    font-weight: 300;
+  }
+
+  .sidebar {
+    @media (min-width: $lg) {
+      grid-column: span 5;
+    }
+  }
+</style>
+<script>
+  let currentIndex = 0;
+  const slides = document.querySelectorAll('.carousel-slide');
+  const dots = document.querySelectorAll('.carousel-dot');
+  const totalSlides = slides.length;
+
+  function updateCarousel(index: number) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
+    });
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+    });
+    currentIndex = index;
+  }
+
+  function nextSlide() {
+    const next = (currentIndex + 1) % totalSlides;
+    updateCarousel(next);
+  }
+
+  function prevSlide() {
+    const prev = (currentIndex - 1 + totalSlides) % totalSlides;
+    updateCarousel(prev);
+  }
+
+  document.getElementById('next-btn')?.addEventListener('click', nextSlide);
+  document.getElementById('prev-btn')?.addEventListener('click', prevSlide);
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => updateCarousel(index));
+  });
+
+  // Touch Swiping Support
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  const carousel = document.getElementById('hero-carousel');
+
+  carousel?.addEventListener('touchstart', (e: any) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  carousel?.addEventListener('touchend', (e: any) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, { passive: true });
+
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) {
+        nextSlide(); // Swiped left
+      } else {
+        prevSlide(); // Swiped right
+      }
+    }
+  }
+
+  // Auto-play (optional, maybe too much for luxury feel? Let's add it but slow)
+  let interval: any;
+  if (totalSlides > 1) {
+    interval = setInterval(nextSlide, 8000);
+
+    const carousel = document.getElementById('hero-carousel');
+    carousel?.addEventListener('mouseenter', () => clearInterval(interval));
+    carousel?.addEventListener('mouseleave', () => {
+      interval = setInterval(nextSlide, 8000);
+    });
+  }
+</script>
+</BaseLayout>

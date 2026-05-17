@@ -1,0 +1,46 @@
+---
+const { content } = Astro.props;
+
+const { title, description, alternatingItemsList } = content.properties;
+import { getMediaUrl } from "../../lib/umbraco";
+---
+
+<section class="alternating-row">
+	<div class="container">
+		<h2>{title}</h2>
+
+		<Fragment set:html={description?.markup} />
+
+		{
+			alternatingItemsList?.items?.map((item: any, index: number) => {
+				const block = item.content;
+				const props = block.properties;
+
+				return (
+					<div class={`row ${index % 2 ? "reverse" : ""}`}>
+						<div class="image">
+							<img
+								src={getMediaUrl(props.image?.[0]?.url)}
+								alt={props.title}
+							/>
+						</div>
+
+						<div class="content">
+							<h3>{props.title}</h3>
+
+							<p>{props.summary}</p>
+
+							<Fragment set:html={props.description?.markup} />
+
+							{props.link?.[0] && (
+								<a href={props.link[0].route?.path}>
+									{props.link[0].title}
+								</a>
+							)}
+						</div>
+					</div>
+				);
+			})
+		}
+	</div>
+</section>

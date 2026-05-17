@@ -1,0 +1,91 @@
+@use "variables" as *;
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background-color: $black;
+  color: $white;
+  font-family: $font-sans;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: $transition-default;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+  transition: $transition-default;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+h1, h2, h3, h4, .serif {
+  font-family: $font-serif;
+}
+
+.container {
+  @include container;
+}
+
+::selection {
+  background-color: rgba($white, 0.1);
+}
+
+// Global utility classes that were frequently used
+.transition-fade {
+  transition: $transition-default;
+}
+
+.opacity-60 { opacity: 0.6; }
+.opacity-50 { opacity: 0.5; }
+.opacity-40 { opacity: 0.45; } // Bumped from 0.4 for contrast
+.opacity-30 { opacity: 0.35; } // Bumped from 0.3 for contrast
+
+.hover-opacity-100:hover { opacity: 1; }
+
+// Accessibility
+:focus-visible {
+  outline: 2px solid $white;
+  outline-offset: 4px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.italic { font-style: italic; }
+.not-italic { font-style: normal; }
+.lowercase { text-transform: lowercase; }
+.uppercase { text-transform: uppercase; }

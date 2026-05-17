@@ -1,0 +1,229 @@
+---
+---
+
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3 class="footer-label">The Hotel</h3>
+        <p class="footer-description serif">
+          Experience the pinnacle of luxury in our coastal sanctuary. Where timeless elegance meets contemporary comfort.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-label">Explore</h3>
+        <ul class="footer-links">
+          {['About Us', 'Suites', 'Dining', 'Spa & Wellness', 'Experiences'].map(item => (
+            <li>
+              <a href="#" class="footer-link-item">{item}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-label">Contact</h3>
+        <p class="footer-contact-info">
+          123 Coastal Drive<br />
+          Pacific Heights, CA 90210<br /><br />
+          +1 800 LUXESTAY<br />
+          concierge@luxestay.com
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-label" id="newsletter-heading">Newsletter</h3>
+        <p class="footer-newsletter-text">Join our mailing list for exclusive offers and updates.</p>
+        <form class="newsletter-form" aria-labelledby="newsletter-heading">
+          <label for="newsletter-email" class="sr-only">Email Address</label>
+          <input 
+            type="email" 
+            id="newsletter-email"
+            placeholder="EMAIL ADDRESS" 
+            class="newsletter-input"
+            required
+          />
+          <button type="submit" class="newsletter-button">Join</button>
+        </form>
+        <div class="social-icons">
+          <a href="#" aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram social-icon" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          </a>
+          <a href="#" aria-label="Facebook">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-facebook social-icon" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="#" aria-label="Twitter">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitter social-icon" aria-hidden="true"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="copyright">
+        © 2024 LuxeStay Hotel & Resorts. All Rights Reserved.
+      </div>
+      <div class="legal-links">
+        <a href="#" class="legal-link">Privacy Policy</a>
+        <a href="#" class="legal-link">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style lang="scss">
+  @use "../styles/variables" as *;
+
+  .footer {
+    background-color: #050505;
+    border-top: 1px solid rgba($white, 0.05);
+    padding-top: $space-24;
+    padding-bottom: $space-12;
+  }
+
+  .footer-container {
+    @include container;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $space-12;
+
+    @media (min-width: $md) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: $lg) {
+      grid-template-columns: repeat(4, 1fr);
+      gap: $space-24;
+    }
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: $space-8;
+  }
+
+  .footer-label {
+    @include uppercase-tracking(11px, 0.3em);
+    font-weight: 600;
+    color: rgba($white, 0.4);
+  }
+
+  .footer-description {
+    color: rgba($white, 0.6);
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+
+  .footer-link-item {
+    font-size: 0.875rem;
+    font-weight: 300;
+    opacity: 0.8;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: $white;
+      opacity: 1;
+    }
+  }
+
+  .footer-contact-info {
+    font-size: 0.875rem;
+    font-weight: 300;
+    line-height: 2;
+    opacity: 0.8;
+  }
+
+  .footer-newsletter-text {
+    font-size: 0.75rem;
+    font-weight: 300;
+    opacity: 0.6;
+  }
+
+  .newsletter-form {
+    display: flex;
+    gap: $space-4;
+    border-bottom: 1px solid rgba($white, 0.1);
+    padding-bottom: $space-2;
+  }
+
+  .newsletter-input {
+    background: transparent;
+    border: none;
+    color: $white;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    width: 100%;
+    outline: none;
+
+    &::placeholder {
+      color: rgba($white, 0.3);
+    }
+  }
+
+  .newsletter-button {
+    @include uppercase-tracking(10px, 0.2em);
+    font-weight: 600;
+  }
+
+  .social-icons {
+    display: flex;
+    gap: $space-6;
+    margin-top: $space-8;
+  }
+
+  .social-icon {
+    opacity: 0.4;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .footer-bottom {
+    margin-top: $space-24;
+    padding-top: $space-12;
+    border-top: 1px solid rgba($white, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-8;
+
+    @media (min-width: $md) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  .copyright, .legal-links {
+    @include uppercase-tracking(10px, 0.2em);
+    font-weight: 500;
+    opacity: 0.3;
+  }
+
+  .legal-links {
+    display: flex;
+    gap: $space-8;
+  }
+
+  .legal-link {
+    transition: opacity 0.3s ease;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+</style>

@@ -1,0 +1,26 @@
+---
+import Layout from "../layouts/BaseLayout.astro";
+import ContentRows from "../components/row/ContentRows.astro";
+
+import { getPageByRoute, getRoutes } from "../lib/umbraco";
+
+export async function getStaticPaths() {
+	const routes = await getRoutes();
+
+	return routes.map((route) => ({
+		params: {
+			slug: route.path.replace(/^\/|\/$/g, ""),
+		},
+	}));
+}
+
+const slug = Astro.params.slug || "";
+
+const page = await getPageByRoute(slug);
+---
+
+<Layout title={page.properties.metaTitle}>
+	<h1>{page.properties.h1}</h1>
+
+	<ContentRows rows={page.properties.contentRows?.items} />
+</Layout>

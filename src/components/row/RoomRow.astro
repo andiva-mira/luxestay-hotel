@@ -1,0 +1,28 @@
+---
+const { content } = Astro.props;
+
+const { title, summary, roomItem, link } = content.properties;
+import { getMediaUrl } from "../../lib/umbraco";
+---
+
+<section class="room-row">
+	<div class="container">
+		<h2>{title}</h2>
+
+		<p>{summary}</p>
+
+		<div class="rooms-grid">
+			{
+				roomItem?.map((room: any) => (
+					<article class="room-card">
+						<h3>{room.name}</h3>
+
+						<a href={room.route?.path}>View Room</a>
+					</article>
+				))
+			}
+		</div>
+
+		{link?.[0] && <a href={link[0].route?.path}>{link[0].title}</a>}
+	</div>
+</section>

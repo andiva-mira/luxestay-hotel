@@ -1,0 +1,438 @@
+---
+interface Props {
+  price: string;
+}
+
+const { price } = Astro.props;
+---
+
+<div class="booking-card">
+  <div class="rate-header">
+    <span class="rate-label">Starting Rate</span>
+    <span class="rate-value serif italic">{price} <span class="rate-unit not-italic opacity-40">/ Night</span></span>
+  </div>
+
+  <form id="booking-form" class="booking-form">
+    <div class="date-fields-container">
+      <div class="date-grid">
+        <div class="field-group">
+          <label for="check-in" class="field-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg> Check In
+          </label>
+          <input 
+            type="text" 
+            id="check-in"
+            readonly
+            required
+            placeholder="DD/MM/YYYY"
+            name="check-in"
+            class="field-input cursor-pointer"
+          />
+        </div>
+        <div class="field-group">
+          <label for="check-out" class="field-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg> Check Out
+          </label>
+          <input 
+            type="text" 
+            id="check-out"
+            readonly
+            required
+            placeholder="DD/MM/YYYY"
+            name="check-out"
+            class="field-input cursor-pointer"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label for="guests" class="field-label">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Number of Guests
+      </label>
+      <div class="select-wrapper">
+        <select 
+          id="guests"
+          name="guests"
+          class="field-input select-input"
+        >
+          {[1, 2, 3, 4, 5].map(n => (
+            <option value={n}>{n} {n === 1 ? 'Guest' : 'Guests'}</option>
+          ))}
+        </select>
+        <div class="select-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="submit-wrapper">
+      <button 
+        type="submit"
+        id="book-submit"
+        class="submit-button"
+        aria-live="polite"
+      >
+        <span id="btn-text-idle" class="btn-text">Verify Availability</span>
+        <span id="btn-text-success" class="btn-text-success">Request Sent</span>
+      </button>
+    </div>
+  </form>
+
+  <div class="booking-footer">
+    <div class="commitment-card">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info info-icon"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+      <div>
+        <p class="commitment-label">Our Commitment</p>
+        <p class="commitment-text">
+          Rates include our full breakfast, evening cocktail hour, and holistic spa access.
+        </p>
+      </div>
+    </div>
+    <p class="footer-note">Zero reservation fees • 48h flexibility</p>
+  </div>
+</div>
+
+<style lang="scss">
+  @use "../styles/variables" as *;
+
+  .booking-card {
+    background-color: rgba($black, 0.4);
+    border: 1px solid rgba($white, 0.1);
+    padding: $space-8;
+    backdrop-filter: blur(4px);
+    position: sticky;
+    top: $space-32;
+    display: flex;
+    flex-direction: column;
+    gap: $space-10;
+
+    @media (min-width: $md) {
+      padding: $space-12;
+    }
+  }
+
+  .rate-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .rate-label {
+    @include uppercase-tracking(11px, 0.2em);
+    opacity: 0.4;
+  }
+
+  .rate-value {
+    font-size: 1.875rem;
+  }
+
+  .rate-unit {
+    font-size: 0.875rem;
+  }
+
+  .booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: $space-8;
+  }
+
+  .date-fields-container {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+
+  .date-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-4;
+  }
+
+  .calendar-wrapper {
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+  }
+
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+
+  /* Flatpickr Custom Styling */
+  :global(.flatpickr-calendar) {
+    background: #18181b !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+    border-radius: 0 !important;
+    font-family: inherit !important;
+    margin-top: 5px;
+  }
+
+  :global(.flatpickr-day) {
+    color: rgba(255, 255, 255, 0.6) !important;
+    border-radius: 0 !important;
+    
+    &.today {
+      border-color: rgba(255, 255, 255, 0.2) !important;
+    }
+    
+    &.selected, &.startRange, &.endRange, 
+    &.selected.startRange, &.selected.endRange {
+      background: #ffffff !important;
+      color: #000000 !important;
+      border-color: #ffffff !important;
+    }
+    
+    &.inRange {
+      background: rgba(255, 255, 255, 0.1) !important;
+      box-shadow: -5px 0 0 rgba(255, 255, 255, 0.1), 5px 0 0 rgba(255, 255, 255, 0.1) !important;
+      border-color: transparent !important;
+    }
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.2) !important;
+      border-color: transparent !important;
+    }
+
+    &.flatpickr-disabled {
+      color: rgba(255, 255, 255, 0.1) !important;
+    }
+  }
+
+  :global(.flatpickr-months) {
+    .flatpickr-month {
+      color: #ffffff !important;
+      fill: #ffffff !important;
+    }
+    .flatpickr-prev-month, .flatpickr-next-month {
+      fill: #ffffff !important;
+      padding: 10px !important;
+      &:hover svg {
+        fill: #ffffff !important;
+      }
+    }
+  }
+
+  :global(.flatpickr-weekday) {
+    color: rgba(255, 255, 255, 0.4) !important;
+    font-size: 10px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+  }
+
+  :global(.flatpickr-innerContainer) {
+    padding: 10px;
+  }
+
+  .field-label {
+    @include uppercase-tracking(10px, 0.2em);
+    font-weight: 600;
+    opacity: 0.4;
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+  }
+
+  .field-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba($white, 0.1);
+    padding: $space-2 0;
+    font-size: 0.875rem;
+    color: $white;
+    transition: border-color 0.3s ease;
+    outline: none;
+    appearance: none;
+
+    &:focus {
+      border-color: $white;
+    }
+
+    &option {
+      background-color: #18181b;
+      color: $white;
+    }
+  }
+
+  .select-wrapper {
+    position: relative;
+  }
+
+  .select-input {
+    padding-right: $space-8;
+  }
+
+  .select-icon {
+    position: absolute;
+    right: 0;
+    top: $space-2;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .submit-wrapper {
+    padding-top: $space-4;
+  }
+
+  .submit-button {
+    width: 100%;
+    background-color: $white;
+    color: $black;
+    padding: $space-5 0;
+    border-radius: 9999px;
+    @include uppercase-tracking(11px, 0.2em);
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
+    transition: $transition-default;
+
+    &:hover {
+      background-color: rgba($white, 0.9);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+
+  .btn-text {
+    display: inline-block;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+
+    &.hidden {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+  }
+
+  .btn-text-success {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+
+    &.visible {
+      transform: translateY(0);
+    }
+  }
+
+  .booking-footer {
+    display: flex;
+    flex-direction: column;
+    gap: $space-6;
+    padding-top: $space-6;
+    border-top: 1px solid rgba($white, 0.05);
+  }
+
+  .commitment-card {
+    display: flex;
+    align-items: flex-start;
+    gap: $space-4;
+    padding: $space-4;
+    background-color: rgba($white, 0.05);
+    border-radius: $space-2;
+    border: 1px solid rgba($white, 0.05);
+  }
+
+  .info-icon {
+    margin-top: 0.125rem;
+    opacity: 0.4;
+    flex-shrink: 0;
+  }
+
+  .commitment-label {
+    @include uppercase-tracking(10px, 0.2em);
+    font-weight: 600;
+    opacity: 0.6;
+    margin-bottom: $space-1;
+  }
+
+  .commitment-text {
+    font-size: 11px;
+    font-weight: 300;
+    line-height: 1.6;
+    opacity: 0.4;
+  }
+
+  .footer-note {
+    font-size: 10px;
+    text-align: center;
+    opacity: 0.3;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
+</style>
+
+<script>
+  import flatpickr from 'flatpickr';
+  import 'flatpickr/dist/flatpickr.min.css';
+
+  const checkInInput = document.getElementById('check-in') as HTMLInputElement;
+  const checkOutInput = document.getElementById('check-out') as HTMLInputElement;
+
+  if (checkInInput) {
+    const fp = flatpickr(checkInInput, {
+      mode: 'range',
+      dateFormat: 'd/m/Y',
+      minDate: 'today',
+      onChange: (selectedDates, _dateStr, instance) => {
+        if (selectedDates.length === 2) {
+          const [start, end] = selectedDates;
+          if (checkInInput) checkInInput.value = instance.formatDate(start, 'd/m/Y');
+          if (checkOutInput) checkOutInput.value = instance.formatDate(end, 'd/m/Y');
+        } else if (selectedDates.length === 1) {
+          if (checkInInput) checkInInput.value = instance.formatDate(selectedDates[0], 'd/m/Y');
+          if (checkOutInput) checkOutInput.value = '';
+        }
+      }
+    });
+
+    // Handle clicks for both inputs to position the picker
+    const showPicker = (e: MouseEvent) => {
+      const target = e.currentTarget as HTMLElement;
+      fp.set('positionElement', target);
+      fp.open();
+    };
+
+    checkInInput.addEventListener('click', showPicker);
+    checkOutInput?.addEventListener('click', showPicker);
+  }
+
+  const form = document.getElementById('booking-form') as HTMLFormElement;
+  const btnIdle = document.getElementById('btn-text-idle');
+  const btnSuccess = document.getElementById('btn-text-success');
+  const btn = document.getElementById('book-submit');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    // Simulate submission
+    btnIdle?.classList.add('hidden');
+    btnSuccess?.classList.add('visible');
+    
+    if (btn) {
+      btn.style.backgroundColor = '#10B981'; // Green success color
+      btn.style.color = 'white';
+    }
+
+    setTimeout(() => {
+      btnIdle?.classList.remove('hidden');
+      btnSuccess?.classList.remove('visible');
+      if (btn) {
+        btn.style.backgroundColor = 'white';
+        btn.style.color = 'black';
+      }
+      form.reset();
+    }, 4000);
+  });
+</script>

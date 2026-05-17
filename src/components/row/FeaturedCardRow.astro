@@ -1,0 +1,42 @@
+---
+const { content } = Astro.props;
+
+const { title, description, featuredItems } = content.properties;
+import { getMediaUrl } from "../../lib/umbraco";
+---
+
+<section class="featured-card-row">
+	<div class="container">
+		<h2>{title}</h2>
+
+		<Fragment set:html={description?.markup} />
+
+		<div class="grid">
+			{
+				featuredItems?.items?.map((item: any) => {
+					const card = item.content;
+					const props = card.properties;
+
+					return (
+						<article class="card">
+							<img
+								src={getMediaUrl(props.image?.[0]?.url)}
+								alt={props.title}
+							/>
+
+							<h3>{props.title}</h3>
+
+							<p>{props.summary}</p>
+
+							{props.link?.[0] && (
+								<a href={props.link[0].route?.path}>
+									{props.link[0].title}
+								</a>
+							)}
+						</article>
+					);
+				})
+			}
+		</div>
+	</div>
+</section>

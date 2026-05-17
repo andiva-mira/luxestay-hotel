@@ -1,0 +1,475 @@
+---
+import BaseLayout from "@/src/layouts/BaseLayout.astro";
+
+const rooms = [
+  {
+    name: "Coastal Panorama Suite",
+    type: "Signature Suite",
+    price: "from $1,250",
+    image: "https://picsum.photos/seed/coastal-suite/1200/800",
+    slug: "coastal-panorama"
+  },
+  {
+    name: "Architect's Loft",
+    type: "Studio",
+    price: "from $850",
+    image: "https://picsum.photos/seed/arch-loft/1200/800",
+    slug: "architects-loft"
+  }
+];
+---
+
+<BaseLayout title="Home - Elevated Living">
+	<!-- Hero Section -->
+	<section class="hero">
+		<div class="hero-bg">
+			<img 
+				src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=2670" 
+				alt="Luxury Hotel Exterior" 
+				class="hero-img"
+				referrerpolicy="no-referrer"
+			/>
+			<div class="hero-overlay"></div>
+		</div>
+
+		<div class="hero-content">
+			<p class="hero-subtitle animate-fade-in">
+				Est. 1924 — The Coastal Sanctuary
+			</p>
+			<h1 class="hero-title serif italic">
+				Elevated <span class="not-italic">Living.</span>
+			</h1>
+			<div class="hero-actions">
+				<a href="/rooms" class="btn-primary">
+					Explore Suites
+				</a>
+				<div class="view-experiences group" role="button" tabindex="0">
+					<span>View Experiences</span>
+					<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+				</div>
+			</div>
+		</div>
+
+		<div class="hero-pagination">
+			<div class="dot active"></div>
+			<div class="dot"></div>
+			<div class="dot"></div>
+		</div>
+	</section>
+
+	<!-- The Experience -->
+	<section class="experience">
+		<div class="experience-inner">
+			<h2 class="experience-title serif italic">Where time dissolves into the horizon.</h2>
+			<div class="divider"></div>
+			<p class="experience-text">
+				Perched upon the crystalline edges of the Pacific, LuxeStay is more than a destination. It is a philosophy of presence, where every detail is orchestrated to return you to yourself.
+			</p>
+		</div>
+	</section>
+
+	<!-- Room Preview Grid -->
+	<section class="rooms-preview">
+		<div class="preview-container">
+			<div class="preview-header">
+				<div>
+					<p class="preview-label">Our Sanctuary</p>
+					<h2 class="preview-title serif italic">Curated Accommodations</h2>
+				</div>
+				<a href="/rooms" class="view-all-link">
+					View All Rooms
+				</a>
+			</div>
+
+			<div class="preview-grid">
+				{rooms.map(room => (
+					<a href={`/rooms/${room.slug}`} class="room-card group">
+						<div class="room-img-wrapper">
+							<img 
+								src={room.image} 
+								alt={room.name} 
+								class="room-preview-img"
+								referrerpolicy="no-referrer"
+							/>
+						</div>
+						<div class="room-info">
+							<div class="room-details">
+								<h3 class="room-name serif italic">{room.name}</h3>
+								<p class="room-type">{room.type}</p>
+							</div>
+							<p class="room-price-info italic">{room.price}</p>
+						</div>
+					</a>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<!-- Dining Preview -->
+	<section class="dining-preview">
+		<div class="dining-bg">
+			<img 
+				src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=2670" 
+				alt="Dining Experience" 
+				class="dining-img"
+				referrerpolicy="no-referrer"
+			/>
+			<div class="dining-overlay"></div>
+		</div>
+
+		<div class="dining-content">
+			<p class="dining-label">Gastronomy</p>
+			<h2 class="dining-title serif italic">The Culinary Arts.</h2>
+			<p class="dining-description">
+				From morning's first light to the depths of midnight, discover a menu crafted with seasonal integrity and coastal inspiration.
+			</p>
+			<a href="/dining" class="btn-outline">
+				Explore Dining
+			</a>
+		</div>
+	</section>
+</BaseLayout>
+
+<style lang="scss">
+	@use "../styles/variables" as *;
+
+	.hero {
+		position: relative;
+		height: 100vh;
+		@include flex-center;
+		overflow: hidden;
+	}
+
+	.hero-bg {
+		position: absolute;
+		inset: 0;
+	}
+
+	.hero-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transform: scale(1.05);
+	}
+
+	.hero-overlay {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(to bottom, rgba($black, 0.6), rgba($black, 0.3), $black);
+	}
+
+	.hero-content {
+		position: relative;
+		z-index: 10;
+		text-align: center;
+		max-width: 900px;
+		padding: 0 $space-6;
+	}
+
+	.hero-subtitle {
+		@include uppercase-tracking(11px, 0.5em);
+		font-weight: 500;
+		margin-bottom: $space-8;
+		color: rgba($white, 0.8);
+	}
+
+	.hero-title {
+		font-size: clamp(3rem, 10vw, 8rem);
+		font-weight: 300;
+		letter-spacing: -0.02em;
+		line-height: 0.85;
+		margin-bottom: $space-12;
+
+		.not-italic {
+			font-style: normal;
+		}
+	}
+
+	.hero-actions {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: $space-8;
+
+		@media (min-width: $md) {
+			flex-direction: row;
+		}
+	}
+
+	.btn-primary {
+		background-color: $white;
+		color: $black;
+		padding: $space-4 $space-10;
+		border-radius: 9999px;
+		@include uppercase-tracking(11px, 0.2em);
+		font-weight: 600;
+		transition: $transition-default;
+
+		&:hover {
+			background-color: rgba($white, 0.9);
+			transform: scale(1.05);
+		}
+	}
+
+	.view-experiences {
+		display: flex;
+		align-items: center;
+		gap: $space-4;
+		@include uppercase-tracking(11px, 0.2em);
+		opacity: 0.8;
+		cursor: pointer;
+
+		.arrow-icon {
+			transition: transform 0.3s ease;
+		}
+
+		&:hover .arrow-icon {
+			transform: translateX($space-1);
+		}
+	}
+
+	.hero-pagination {
+		position: absolute;
+		bottom: $space-12;
+		left: $space-12;
+		display: none;
+		gap: $space-4;
+
+		@media (min-width: $md) {
+			display: flex;
+		}
+
+		.dot {
+			width: 4px;
+			height: 4px;
+			border-radius: 50%;
+			background-color: rgba($white, 0.3);
+
+			&.active {
+				background-color: $white;
+			}
+		}
+	}
+
+	.experience {
+		padding: $space-32 $space-6;
+		@include container;
+		text-align: center;
+	}
+
+	.experience-inner {
+		max-width: 42rem;
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		gap: $space-12;
+	}
+
+	.experience-title {
+		font-size: clamp(2rem, 5vw, 3.75rem);
+		font-weight: 300;
+	}
+
+	.divider {
+		height: 1px;
+		background-color: rgba($white, 0.1);
+		width: $space-24;
+		margin: 0 auto;
+	}
+
+	.experience-text {
+		font-size: clamp(1rem, 2vw, 1.25rem);
+		font-weight: 300;
+		color: rgba($white, 0.6);
+		line-height: 1.6;
+	}
+
+	.rooms-preview {
+		padding: $space-24 $space-6;
+		background-color: #050505;
+	}
+
+	.preview-container {
+		@include container;
+	}
+
+	.preview-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-end;
+		margin-bottom: $space-16;
+	}
+
+	.preview-label {
+		@include uppercase-tracking(11px, 0.3em);
+		font-weight: 600;
+		color: rgba($white, 0.4);
+		margin-bottom: $space-4;
+	}
+
+	.preview-title {
+		font-size: 3rem;
+		font-weight: 300;
+		line-height: 1.1;
+	}
+
+	.view-all-link {
+		@include uppercase-tracking(11px, 0.2em);
+		font-weight: 600;
+		border-bottom: 1px solid rgba($white, 0.2);
+		padding-bottom: $space-1;
+		transition: border-color 0.3s ease;
+
+		&:hover {
+			border-color: $white;
+		}
+	}
+
+	.preview-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: $space-12;
+
+		@media (min-width: $md) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		@media (min-width: $lg) {
+			gap: $space-24;
+		}
+	}
+
+	.room-card {
+		display: block;
+		text-decoration: none;
+		color: inherit;
+		display: flex;
+		flex-direction: column;
+		gap: $space-8;
+	}
+
+	.room-img-wrapper {
+		overflow: hidden;
+		aspect-ratio: 4 / 3;
+		background-color: #18181b;
+	}
+
+	.room-preview-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 1s ease, opacity 0.5s ease;
+		opacity: 0.8;
+
+		.room-card:hover & {
+			transform: scale(1.1);
+			opacity: 1;
+		}
+	}
+
+	.room-info {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		padding-top: $space-4;
+		border-top: 1px solid rgba($white, 0.05);
+	}
+
+	.room-name {
+		font-size: 1.5rem;
+		margin-bottom: $space-2;
+	}
+
+	.room-type {
+		@include uppercase-tracking(10px, 0.2em);
+		opacity: 0.4;
+	}
+
+	.room-price-info {
+		@include uppercase-tracking(11px, 0.2em);
+		font-weight: 500;
+		opacity: 0.6;
+	}
+
+	.dining-preview {
+		position: relative;
+		padding: $space-32 * 1.5 $space-6;
+		overflow: hidden;
+		@include flex-center;
+	}
+
+	.dining-bg {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+	}
+
+	.dining-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		opacity: 0.3;
+	}
+
+	.dining-overlay {
+		position: absolute;
+		inset: 0;
+		background-color: rgba($black, 0.4);
+	}
+
+	.dining-content {
+		position: relative;
+		z-index: 10;
+		max-width: 900px;
+		margin: 0 auto;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		gap: $space-12;
+	}
+
+	.dining-label {
+		@include uppercase-tracking(11px, 0.3em);
+		font-weight: 600;
+		color: rgba($white, 0.6);
+	}
+
+	.dining-title {
+		font-size: clamp(3rem, 10vw, 4.5rem);
+		line-height: 1.1;
+	}
+
+	.dining-description {
+		font-size: 1.125rem;
+		font-weight: 300;
+		color: rgba($white, 0.7);
+		max-width: 36rem;
+		margin: 0 auto;
+		line-height: 1.6;
+	}
+
+	.btn-outline {
+		display: inline-block;
+		border: 1px solid rgba($white, 0.3);
+		padding: $space-4 $space-12;
+		border-radius: 9999px;
+		@include uppercase-tracking(11px, 0.2em);
+		font-weight: 600;
+		transition: $transition-default;
+
+		&:hover {
+			background-color: $white;
+			color: $black;
+		}
+	}
+
+	@keyframes fade-in {
+		from { opacity: 0; transform: translateY(10px); }
+		to { opacity: 1; transform: translateY(0); }
+	}
+
+	.animate-fade-in {
+		animation: fade-in 1.2s ease-out forwards;
+	}
+</style>
